@@ -7,18 +7,18 @@
     <style>
         :root {
             --page: #000000;
-            --surface: rgba(22, 22, 24, 0.72);
-            --surface-strong: rgba(18, 18, 20, 0.94);
+            --surface: rgba(10, 11, 17, 0.76);
+            --surface-strong: rgba(8, 8, 12, 0.9);
             --ink: #f5f5f7;
-            --muted: #a1a1a6;
-            --soft: #6e6e73;
-            --line: rgba(255, 255, 255, 0.12);
-            --line-strong: rgba(255, 255, 255, 0.2);
-            --blue: #2997ff;
-            --blue-dark: #7cc4ff;
-            --green: #5bd1a0;
-            --violet: #b7a7ff;
-            --shadow: 0 34px 110px rgba(0, 0, 0, 0.58);
+            --muted: rgba(224, 226, 236, 0.72);
+            --soft: rgba(205, 209, 224, 0.5);
+            --line: rgba(255, 255, 255, 0.16);
+            --line-strong: rgba(255, 255, 255, 0.26);
+            --blue: #7bdcff;
+            --blue-dark: #a9eeff;
+            --green: #78f1d4;
+            --violet: #b294ff;
+            --shadow: 0 34px 110px rgba(0, 0, 0, 0.62);
             --radius: 8px;
         }
 
@@ -33,41 +33,134 @@
         }
 
         body {
+            position: relative;
             min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             background:
-                linear-gradient(180deg, #060607 0%, #000000 38%, #0b0b0d 100%);
+                radial-gradient(ellipse at 50% -12%, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 34%),
+                linear-gradient(180deg, #050607 0%, #000000 48%, #05050b 100%);
             color: var(--ink);
             letter-spacing: 0;
             font-weight: 400;
+            overflow-x: hidden;
         }
 
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            z-index: -2;
+            z-index: 0;
             pointer-events: none;
             background:
-                radial-gradient(ellipse at 18% 12%, rgba(126, 204, 255, 0.18) 0%, rgba(126, 204, 255, 0) 36%),
-                radial-gradient(ellipse at 84% 18%, rgba(215, 194, 255, 0.15) 0%, rgba(215, 194, 255, 0) 34%),
-                linear-gradient(115deg, rgba(41, 151, 255, 0.1) 0%, rgba(41, 151, 255, 0) 32%),
-                linear-gradient(245deg, rgba(183, 167, 255, 0.1) 0%, rgba(183, 167, 255, 0) 36%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 24%);
+                radial-gradient(circle at 23% 20%, rgba(120, 241, 212, 0.16), transparent 22%),
+                radial-gradient(circle at 75% 16%, rgba(178, 148, 255, 0.18), transparent 24%),
+                radial-gradient(circle at 47% 86%, rgba(123, 220, 255, 0.16), transparent 30%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 18%);
+            opacity: 0.42;
         }
 
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
             opacity: 0.18;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-            background-size: 96px 96px;
-            mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+                radial-gradient(circle, rgba(255, 255, 255, 0.36) 0 1px, transparent 1.3px);
+            background-size: 16px 16px;
+            mask-image:
+                radial-gradient(ellipse at 50% 20%, #000 0%, rgba(0, 0, 0, 0.9) 46%, transparent 82%);
+            animation: dotDrift 18s linear infinite;
+        }
+
+        .liquid-scene {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.48;
+        }
+
+        .liquid-scene::before,
+        .liquid-scene::after,
+        .liquid-wave {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 150vw;
+            height: 230px;
+            border-radius: 50%;
+            filter: blur(34px) saturate(135%);
+            mix-blend-mode: screen;
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        .liquid-scene::before {
+            bottom: -4%;
+            background:
+                radial-gradient(ellipse at 16% 48%, rgba(125, 238, 255, 0.5), transparent 29%),
+                radial-gradient(ellipse at 38% 52%, rgba(160, 119, 255, 0.42), transparent 28%),
+                radial-gradient(ellipse at 74% 42%, rgba(91, 218, 255, 0.42), transparent 29%),
+                linear-gradient(90deg, transparent 0%, rgba(118, 227, 255, 0.3) 18%, rgba(173, 112, 255, 0.34) 50%, rgba(80, 211, 255, 0.3) 78%, transparent 100%);
+            transform: translateX(-50%) rotate(7deg) translateY(48px);
+            animation: liquidSweepA 15s ease-in-out infinite alternate;
+        }
+
+        .liquid-scene::after {
+            bottom: 2%;
+            background:
+                radial-gradient(ellipse at 12% 50%, rgba(152, 114, 255, 0.42), transparent 24%),
+                radial-gradient(ellipse at 55% 58%, rgba(112, 246, 226, 0.28), transparent 32%),
+                radial-gradient(ellipse at 86% 48%, rgba(174, 93, 255, 0.36), transparent 26%),
+                linear-gradient(90deg, transparent 0%, rgba(161, 125, 255, 0.26) 16%, rgba(90, 230, 255, 0.18) 48%, rgba(167, 96, 255, 0.3) 84%, transparent 100%);
+            transform: translateX(-50%) rotate(-11deg) translateY(116px);
+            opacity: 0.56;
+            animation: liquidSweepB 18s ease-in-out infinite alternate;
+        }
+
+        .liquid-wave {
+            top: 58%;
+            background:
+                radial-gradient(ellipse at 32% 50%, rgba(120, 241, 212, 0.14), transparent 24%),
+                radial-gradient(ellipse at 74% 48%, rgba(143, 125, 255, 0.16), transparent 30%),
+                linear-gradient(90deg, transparent, rgba(123, 220, 255, 0.1), rgba(178, 148, 255, 0.12), transparent);
+            transform: translateX(-50%) rotate(2deg) translateY(-88px);
+            opacity: 0.42;
+            animation: liquidSweepC 22s ease-in-out infinite alternate;
+        }
+
+        @keyframes liquidSweepA {
+            from { transform: translateX(-52%) rotate(5deg) translateY(28px) scaleX(1); }
+            to { transform: translateX(-48%) rotate(9deg) translateY(76px) scaleX(1.06); }
+        }
+
+        @keyframes liquidSweepB {
+            from { transform: translateX(-46%) rotate(-13deg) translateY(128px) scaleX(1.03); }
+            to { transform: translateX(-54%) rotate(-8deg) translateY(92px) scaleX(0.98); }
+        }
+
+        @keyframes liquidSweepC {
+            from { transform: translateX(-54%) rotate(1deg) translateY(-94px) scaleX(1.02); }
+            to { transform: translateX(-47%) rotate(4deg) translateY(-66px) scaleX(1.08); }
+        }
+
+        @keyframes dotDrift {
+            from { background-position: 0 0; }
+            to { background-position: 42px 28px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::after,
+            .liquid-scene::before,
+            .liquid-scene::after,
+            .liquid-wave,
+            .hero-panel::before,
+            .search-panel::before {
+                animation: none;
+            }
         }
 
         button,
@@ -80,9 +173,9 @@
             top: 0;
             z-index: 10;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(10, 10, 12, 0.72);
-            backdrop-filter: saturate(180%) blur(18px);
-            -webkit-backdrop-filter: saturate(180%) blur(18px);
+            background: linear-gradient(180deg, rgba(7, 8, 10, 0.82), rgba(7, 8, 10, 0.54));
+            backdrop-filter: saturate(190%) blur(22px);
+            -webkit-backdrop-filter: saturate(190%) blur(22px);
         }
 
         .nav-inner {
@@ -112,17 +205,19 @@
         }
 
         .page-shell {
+            position: relative;
+            z-index: 2;
             width: min(1180px, calc(100% - 40px));
             margin: 0 auto;
             padding: 54px 0 36px;
         }
 
         .hero {
-            min-height: 330px;
+            min-height: 0;
             display: grid;
-            grid-template-columns: minmax(0, 1fr) 316px;
-            align-items: stretch;
-            gap: 44px;
+            grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+            align-items: start;
+            gap: clamp(22px, 3.7vw, 44px);
             padding: 42px 0 46px;
         }
 
@@ -156,20 +251,25 @@
         .hero-panel {
             position: relative;
             display: grid;
-            grid-template-rows: 1fr auto;
-            align-self: stretch;
+            grid-template-rows: auto auto;
+            align-self: start;
+            justify-self: end;
             min-height: 0;
-            padding: 18px;
+            width: min(100%, 420px);
+            padding: 15px;
             border: 1px solid var(--line);
             border-radius: var(--radius);
             background:
-                radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.075) 30%, rgba(255, 255, 255, 0) 58%),
-                linear-gradient(135deg, rgba(145, 177, 205, 0.14) 0%, rgba(255, 255, 255, 0.06) 42%, rgba(178, 169, 210, 0.1) 100%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.032) 100%),
-                rgba(18, 18, 20, 0.72);
-            box-shadow: var(--shadow);
-            backdrop-filter: saturate(170%) blur(28px);
-            -webkit-backdrop-filter: saturate(170%) blur(28px);
+                radial-gradient(ellipse at 16% 8%, rgba(255, 255, 255, 0.28), transparent 34%),
+                radial-gradient(ellipse at 82% 12%, rgba(178, 148, 255, 0.11), transparent 42%),
+                linear-gradient(135deg, rgba(152, 217, 255, 0.1), rgba(255, 255, 255, 0.045) 46%, rgba(178, 148, 255, 0.08)),
+                rgba(11, 12, 20, 0.72);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.38),
+                inset 0 -18px 44px rgba(28, 23, 64, 0.18),
+                var(--shadow);
+            backdrop-filter: saturate(180%) blur(34px);
+            -webkit-backdrop-filter: saturate(180%) blur(34px);
             overflow: hidden;
         }
 
@@ -184,10 +284,11 @@
         .hero-panel::before {
             inset: -34% -18% auto 22%;
             height: 150px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
-            filter: blur(18px);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.38), rgba(123, 220, 255, 0.14), rgba(255, 255, 255, 0));
+            filter: blur(15px);
             transform: rotate(-12deg);
             opacity: 0.68;
+            animation: glassHighlight 9s ease-in-out infinite alternate;
         }
 
         .hero-panel::after {
@@ -195,9 +296,14 @@
             bottom: -92px;
             width: 210px;
             height: 210px;
-            background: radial-gradient(circle, rgba(145, 177, 205, 0.16), rgba(178, 169, 210, 0.075) 44%, rgba(255, 255, 255, 0) 70%);
+            background: radial-gradient(circle, rgba(123, 220, 255, 0.2), rgba(178, 148, 255, 0.12) 44%, rgba(255, 255, 255, 0) 70%);
             filter: blur(8px);
             opacity: 0.72;
+        }
+
+        @keyframes glassHighlight {
+            from { transform: translateX(-8%) rotate(-12deg); opacity: 0.48; }
+            to { transform: translateX(8%) rotate(-8deg); opacity: 0.8; }
         }
 
         .hero-stats {
@@ -205,41 +311,45 @@
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            align-content: center;
+            gap: 9px;
+            align-content: start;
         }
 
         .hero-stat {
+            container-type: inline-size;
             min-width: 0;
-            min-height: 132px;
+            min-height: 96px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 16px 12px;
+            padding: 11px 10px 10px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: var(--radius);
             background:
-                radial-gradient(ellipse at 26% 12%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0) 72%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(145, 177, 205, 0.065) 48%, rgba(178, 169, 210, 0.085)),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.028) 100%),
-                rgba(255, 255, 255, 0.03);
+                radial-gradient(ellipse at 22% 10%, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.075) 34%, rgba(255, 255, 255, 0) 72%),
+                radial-gradient(ellipse at 80% 82%, rgba(123, 220, 255, 0.08), transparent 48%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(105, 119, 181, 0.055) 48%, rgba(178, 148, 255, 0.07)),
+                rgba(255, 255, 255, 0.045);
             box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.22),
-                inset 0 -16px 34px rgba(0, 0, 0, 0.18),
-                0 12px 30px rgba(0, 0, 0, 0.18);
+                inset 0 1px 0 rgba(255, 255, 255, 0.36),
+                inset 0 -16px 34px rgba(23, 18, 54, 0.22),
+                0 12px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         .hero-stat-value {
             color: #ffffff;
-            font-size: clamp(28px, 3vw, 42px);
+            max-width: 100%;
+            font-size: min(32px, 30cqw);
             line-height: 1;
             font-weight: 620;
-            letter-spacing: -0.03em;
+            letter-spacing: 0;
             white-space: nowrap;
         }
 
         .hero-stat-label {
-            margin-top: 14px;
+            margin-top: 10px;
             color: var(--muted);
             font-size: 12px;
             line-height: 1.35;
@@ -249,7 +359,7 @@
         .hero-note {
             position: relative;
             z-index: 1;
-            margin-top: 14px;
+            margin-top: 13px;
             color: var(--muted);
             font-size: 12px;
             line-height: 1.5;
@@ -264,13 +374,17 @@
             border: 1px solid var(--line);
             border-radius: var(--radius);
             background:
-                radial-gradient(ellipse at 12% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 32%, rgba(255, 255, 255, 0) 64%),
-                linear-gradient(128deg, rgba(145, 177, 205, 0.105), rgba(255, 255, 255, 0.045) 46%, rgba(178, 169, 210, 0.075)),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.04)),
+                radial-gradient(ellipse at 9% 0%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.045) 31%, rgba(255, 255, 255, 0) 65%),
+                radial-gradient(ellipse at 86% 7%, rgba(178, 148, 255, 0.095), transparent 42%),
+                linear-gradient(128deg, rgba(123, 220, 255, 0.07), rgba(255, 255, 255, 0.035) 46%, rgba(178, 148, 255, 0.07)),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.03)),
                 var(--surface);
-            box-shadow: var(--shadow);
-            backdrop-filter: saturate(170%) blur(30px);
-            -webkit-backdrop-filter: saturate(170%) blur(30px);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.32),
+                inset 0 -20px 46px rgba(42, 35, 92, 0.18),
+                var(--shadow);
+            backdrop-filter: saturate(190%) blur(34px);
+            -webkit-backdrop-filter: saturate(190%) blur(34px);
             overflow: hidden;
         }
 
@@ -282,9 +396,10 @@
             top: -80px;
             height: 128px;
             border-radius: 999px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.16), rgba(126, 204, 255, 0.08), rgba(255, 255, 255, 0));
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.24), rgba(123, 220, 255, 0.18), rgba(178, 148, 255, 0.16), rgba(255, 255, 255, 0));
             filter: blur(16px);
             pointer-events: none;
+            animation: glassHighlight 10s ease-in-out infinite alternate;
         }
 
         .search-row,
@@ -335,8 +450,9 @@
             border-radius: var(--radius);
             outline: none;
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.09)),
-                rgba(255, 255, 255, 0.08);
+                radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.16), transparent 46%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.045)),
+                rgba(10, 11, 17, 0.68);
             color: #ffffff;
             font-size: 17px;
             font-weight: 420;
@@ -345,14 +461,14 @@
         }
 
         .search-box::placeholder {
-            color: rgba(255, 255, 255, 0.72);
+            color: rgba(255, 255, 255, 0.76);
         }
 
         .search-box:focus {
             border-color: rgba(255, 255, 255, 0.38);
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12)),
-                rgba(255, 255, 255, 0.11);
+                linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.07)),
+                rgba(10, 11, 17, 0.76);
             box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.105);
         }
 
@@ -414,7 +530,9 @@
             padding: 0 13px;
             border: 1px solid rgba(255, 255, 255, 0.105);
             border-radius: var(--radius);
-            background: rgba(255, 255, 255, 0.055);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.04)),
+                rgba(12, 13, 20, 0.62);
             color: #d2d2d7;
             cursor: pointer;
             font-size: 14px;
@@ -454,9 +572,12 @@
             border: 1px solid var(--line);
             border-radius: var(--radius);
             background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
+                radial-gradient(ellipse at 24% 0%, rgba(255, 255, 255, 0.08), transparent 38%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
                 var(--surface-strong);
             box-shadow: 0 28px 90px rgba(0, 0, 0, 0.46);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
 
         .table-scroll {
@@ -476,7 +597,7 @@
             z-index: 2;
             padding: 14px 18px;
             border-bottom: 1px solid var(--line-strong);
-            background: rgba(20, 20, 22, 0.94);
+            background: rgba(14, 15, 24, 0.9);
             color: var(--muted);
             font-size: 12px;
             font-weight: 520;
@@ -499,7 +620,7 @@
         }
 
         tbody tr:hover td {
-            background: rgba(41, 151, 255, 0.075);
+            background: rgba(123, 220, 255, 0.09);
         }
 
         tbody tr:last-child td {
@@ -551,10 +672,10 @@
 
         @media (max-width: 900px) {
             .hero {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr) minmax(270px, 42%);
                 align-items: start;
                 min-height: auto;
-                gap: 28px;
+                gap: 22px;
                 padding-top: 20px;
             }
 
@@ -563,7 +684,31 @@
             }
 
             .hero-panel {
-                min-height: 220px;
+                justify-self: end;
+                width: 100%;
+                min-height: 0;
+                padding: 12px;
+            }
+
+            .hero-stat {
+                min-height: 84px;
+                padding: 9px 8px 8px;
+            }
+
+            .hero-stat-value {
+                font-size: min(26px, 31cqw);
+            }
+
+            .hero-stat-label {
+                margin-top: 8px;
+                font-size: 10px;
+                line-height: 1.25;
+            }
+
+            .hero-note {
+                margin-top: 10px;
+                font-size: 10px;
+                line-height: 1.4;
             }
         }
 
@@ -588,6 +733,23 @@
 
             .subtitle {
                 font-size: 18px;
+            }
+
+            .hero-panel {
+                padding: 13px;
+            }
+
+            .hero-stats {
+                gap: 8px;
+            }
+
+            .hero-stat {
+                min-height: 88px;
+                padding: 10px 8px 9px;
+            }
+
+            .hero-stat-label {
+                font-size: 11px;
             }
 
             .search-panel {
@@ -619,9 +781,23 @@
                 font-size: 25px;
             }
         }
+
+        @media (max-width: 560px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .hero-panel {
+                justify-self: start;
+            }
+        }
     </style>
 </head>
 <body>
+<div class="liquid-scene" aria-hidden="true">
+    <span class="liquid-wave"></span>
+</div>
 <nav class="site-nav" aria-label="页面导航">
     <div class="nav-inner">
         <div class="brand">汉字零部件</div>
