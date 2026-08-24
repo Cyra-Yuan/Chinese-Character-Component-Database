@@ -200,19 +200,22 @@
             opacity: 0.72;
         }
 
-        .glyph-showcase {
+        .hero-stats {
             position: relative;
             z-index: 1;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
             align-content: center;
         }
 
-        .glyph-tile {
-            aspect-ratio: 1;
-            display: grid;
-            place-items: center;
+        .hero-stat {
+            min-width: 0;
+            min-height: 132px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px 12px;
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: var(--radius);
             background:
@@ -220,13 +223,27 @@
                 linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(145, 177, 205, 0.065) 48%, rgba(178, 169, 210, 0.085)),
                 linear-gradient(180deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.028) 100%),
                 rgba(255, 255, 255, 0.03);
-            color: #ffffff;
-            font-size: clamp(25px, 2.9vw, 38px);
-            font-weight: 500;
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.22),
                 inset 0 -16px 34px rgba(0, 0, 0, 0.18),
                 0 12px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-stat-value {
+            color: #ffffff;
+            font-size: clamp(28px, 3vw, 42px);
+            line-height: 1;
+            font-weight: 620;
+            letter-spacing: -0.03em;
+            white-space: nowrap;
+        }
+
+        .hero-stat-label {
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.35;
+            font-weight: 420;
         }
 
         .hero-note {
@@ -273,7 +290,6 @@
         .search-row,
         .filter-head,
         .tabs,
-        .stats,
         .result-info,
         .table-card,
         .footnote {
@@ -420,38 +436,6 @@
             color: #000000;
             box-shadow: none;
             font-weight: 520;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 12px;
-            margin: 18px 0 20px;
-        }
-
-        .stat {
-            padding: 16px;
-            border: 1px solid var(--line);
-            border-radius: var(--radius);
-            background:
-                radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.055) 40%, rgba(255, 255, 255, 0) 74%),
-                linear-gradient(135deg, rgba(126, 204, 255, 0.09), rgba(255, 255, 255, 0.045) 48%, rgba(215, 194, 255, 0.075)),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
-                rgba(255, 255, 255, 0.03);
-        }
-
-        .stat-value {
-            color: var(--ink);
-            font-size: 28px;
-            font-weight: 620;
-            line-height: 1;
-        }
-
-        .stat-label {
-            margin-top: 8px;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 330;
         }
 
         .result-info {
@@ -616,10 +600,6 @@
                 gap: 10px;
             }
 
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
             .table-scroll {
                 max-height: none;
             }
@@ -659,14 +639,20 @@
             <h1 id="pageTitle">汉字零部件数据库</h1>
             <div class="subtitle">为字体设计、字形研究和部件复用整理的轻量查询工具。输入任意部件或汉字，即刻定位相关字形。</div>
         </div>
-        <aside class="hero-panel" aria-label="部件示例">
-            <div class="glyph-showcase">
-                <div class="glyph-tile">令</div>
-                <div class="glyph-tile">页</div>
-                <div class="glyph-tile">青</div>
-                <div class="glyph-tile">甬</div>
-                <div class="glyph-tile">亻</div>
-                <div class="glyph-tile">辶</div>
+        <aside class="hero-panel" aria-label="数据库介绍信息">
+            <div class="hero-stats" aria-label="数据库统计">
+                <div class="hero-stat">
+                    <div class="hero-stat-value" id="charCount">--</div>
+                    <div class="hero-stat-label">收录汉字</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value" id="partCount">--</div>
+                    <div class="hero-stat-label">非成字部件</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">双向</div>
+                    <div class="hero-stat-label">搜索与筛选</div>
+                </div>
             </div>
             <p class="hero-note">从部件到汉字，也从汉字回看结构。深色背景降低界面存在感，把视觉重心交还给字形。</p>
         </aside>
@@ -687,21 +673,6 @@
 
         <div class="tabs" id="partTabs">
             <button class="tab active" data-part="all">全部</button>
-        </div>
-
-        <div class="stats" aria-label="数据库统计">
-            <div class="stat">
-                <div class="stat-value" id="charCount">--</div>
-                <div class="stat-label">收录汉字</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value" id="partCount">--</div>
-                <div class="stat-label">非成字部件</div>
-            </div>
-            <div class="stat">
-                <div class="stat-value">双向</div>
-                <div class="stat-label">搜索与筛选</div>
-            </div>
         </div>
 
         <div class="result-info">
