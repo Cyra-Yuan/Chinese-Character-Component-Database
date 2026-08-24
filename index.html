@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉字零部件全映射数据库 | 深色高级版</title>
+    <style>
+        :root {
+            --page: #000000;
+            --surface: rgba(22, 22, 24, 0.72);
+            --surface-strong: rgba(18, 18, 20, 0.94);
+            --ink: #f5f5f7;
+            --muted: #a1a1a6;
+            --soft: #6e6e73;
+            --line: rgba(255, 255, 255, 0.12);
+            --line-strong: rgba(255, 255, 255, 0.2);
+            --blue: #2997ff;
+            --blue-dark: #7cc4ff;
+            --green: #5bd1a0;
+            --violet: #b7a7ff;
+            --shadow: 0 34px 110px rgba(0, 0, 0, 0.58);
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background:
+                linear-gradient(180deg, #060607 0%, #000000 38%, #0b0b0d 100%);
+            color: var(--ink);
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse at 18% 12%, rgba(126, 204, 255, 0.18) 0%, rgba(126, 204, 255, 0) 36%),
+                radial-gradient(ellipse at 84% 18%, rgba(215, 194, 255, 0.15) 0%, rgba(215, 194, 255, 0) 34%),
+                linear-gradient(115deg, rgba(41, 151, 255, 0.1) 0%, rgba(41, 151, 255, 0) 32%),
+                linear-gradient(245deg, rgba(183, 167, 255, 0.1) 0%, rgba(183, 167, 255, 0) 36%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 24%);
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.18;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 96px 96px;
+            mask-image: linear-gradient(180deg, #000 0%, transparent 72%);
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        .site-nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 10, 12, 0.72);
+            backdrop-filter: saturate(180%) blur(18px);
+            -webkit-backdrop-filter: saturate(180%) blur(18px);
+        }
+
+        .nav-inner {
+            width: min(1180px, calc(100% - 40px));
+            min-height: 48px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            font-size: 14px;
+            font-weight: 590;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .nav-meta {
+            display: flex;
+            gap: 18px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 400;
+            white-space: nowrap;
+        }
+
+        .page-shell {
+            width: min(1180px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 54px 0 36px;
+        }
+
+        .hero {
+            min-height: 330px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 316px;
+            align-items: stretch;
+            gap: 44px;
+            padding: 42px 0 46px;
+        }
+
+        .eyebrow {
+            margin-bottom: 18px;
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        h1 {
+            max-width: none;
+            font-size: clamp(38px, 4.8vw, 58px);
+            line-height: 1.08;
+            font-weight: 610;
+            letter-spacing: 0;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .subtitle {
+            max-width: 660px;
+            margin-top: 22px;
+            color: #c6c6cc;
+            font-size: clamp(17px, 1.55vw, 21px);
+            line-height: 1.48;
+            font-weight: 330;
+        }
+
+        .hero-panel {
+            position: relative;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            align-self: stretch;
+            min-height: 0;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.075) 30%, rgba(255, 255, 255, 0) 58%),
+                linear-gradient(135deg, rgba(145, 177, 205, 0.14) 0%, rgba(255, 255, 255, 0.06) 42%, rgba(178, 169, 210, 0.1) 100%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.032) 100%),
+                rgba(18, 18, 20, 0.72);
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(170%) blur(28px);
+            -webkit-backdrop-filter: saturate(170%) blur(28px);
+            overflow: hidden;
+        }
+
+        .hero-panel::before,
+        .hero-panel::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            border-radius: 999px;
+        }
+
+        .hero-panel::before {
+            inset: -34% -18% auto 22%;
+            height: 150px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0));
+            filter: blur(18px);
+            transform: rotate(-12deg);
+            opacity: 0.68;
+        }
+
+        .hero-panel::after {
+            right: -80px;
+            bottom: -92px;
+            width: 210px;
+            height: 210px;
+            background: radial-gradient(circle, rgba(145, 177, 205, 0.16), rgba(178, 169, 210, 0.075) 44%, rgba(255, 255, 255, 0) 70%);
+            filter: blur(8px);
+            opacity: 0.72;
+        }
+
+        .glyph-showcase {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            align-content: center;
+        }
+
+        .glyph-tile {
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius);
+            background:
+                radial-gradient(ellipse at 26% 12%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0) 72%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(145, 177, 205, 0.065) 48%, rgba(178, 169, 210, 0.085)),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.028) 100%),
+                rgba(255, 255, 255, 0.03);
+            color: #ffffff;
+            font-size: clamp(25px, 2.9vw, 38px);
+            font-weight: 500;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.22),
+                inset 0 -16px 34px rgba(0, 0, 0, 0.18),
+                0 12px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-note {
+            position: relative;
+            z-index: 1;
+            margin-top: 14px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: 350;
+        }
+
+        .search-panel {
+            position: relative;
+            z-index: 1;
+            margin-top: -16px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background:
+                radial-gradient(ellipse at 12% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 32%, rgba(255, 255, 255, 0) 64%),
+                linear-gradient(128deg, rgba(145, 177, 205, 0.105), rgba(255, 255, 255, 0.045) 46%, rgba(178, 169, 210, 0.075)),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.04)),
+                var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: saturate(170%) blur(30px);
+            -webkit-backdrop-filter: saturate(170%) blur(30px);
+            overflow: hidden;
+        }
+
+        .search-panel::before {
+            content: "";
+            position: absolute;
+            left: 5%;
+            right: 5%;
+            top: -80px;
+            height: 128px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.16), rgba(126, 204, 255, 0.08), rgba(255, 255, 255, 0));
+            filter: blur(16px);
+            pointer-events: none;
+        }
+
+        .search-row,
+        .filter-head,
+        .tabs,
+        .stats,
+        .result-info,
+        .table-card,
+        .footnote {
+            position: relative;
+            z-index: 1;
+        }
+
+        .search-row {
+            position: relative;
+        }
+
+        .search-row::before {
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            width: 15px;
+            height: 15px;
+            border: 2px solid #8e8e93;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .search-row::after {
+            content: "";
+            position: absolute;
+            left: 33px;
+            top: calc(50% + 8px);
+            width: 8px;
+            height: 2px;
+            border-radius: 2px;
+            background: #8e8e93;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .search-box {
+            width: 100%;
+            min-height: 58px;
+            padding: 0 22px 0 54px;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius);
+            outline: none;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.09)),
+                rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 420;
+            text-shadow: 0 1px 14px rgba(255, 255, 255, 0.18);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        .search-box:focus {
+            border-color: rgba(255, 255, 255, 0.38);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.12)),
+                rgba(255, 255, 255, 0.11);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.105);
+        }
+
+        .filter-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 22px 0 12px;
+        }
+
+        .label-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 8px;
+            color: var(--ink);
+            font-size: 15px;
+            font-weight: 520;
+        }
+
+        .label-tip {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 330;
+        }
+
+        .clear-filter {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 0 10px;
+            border-radius: var(--radius);
+            color: var(--blue);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 450;
+            user-select: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .clear-filter:hover {
+            background: rgba(41, 151, 255, 0.14);
+            color: var(--blue-dark);
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 124px;
+            overflow-y: auto;
+            padding: 2px 2px 6px;
+            scrollbar-width: thin;
+        }
+
+        .tab {
+            min-height: 34px;
+            padding: 0 13px;
+            border: 1px solid rgba(255, 255, 255, 0.105);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.055);
+            color: #d2d2d7;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 380;
+            white-space: nowrap;
+            transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .tab:hover {
+            transform: translateY(-1px);
+            border-color: rgba(41, 151, 255, 0.34);
+            background: rgba(255, 255, 255, 0.095);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+        }
+
+        .tab.active {
+            border-color: rgba(255, 255, 255, 0.86);
+            background: #f5f5f7;
+            color: #000000;
+            box-shadow: none;
+            font-weight: 520;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin: 18px 0 20px;
+        }
+
+        .stat {
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background:
+                radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.055) 40%, rgba(255, 255, 255, 0) 74%),
+                linear-gradient(135deg, rgba(126, 204, 255, 0.09), rgba(255, 255, 255, 0.045) 48%, rgba(215, 194, 255, 0.075)),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)),
+                rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-value {
+            color: var(--ink);
+            font-size: 28px;
+            font-weight: 620;
+            line-height: 1;
+        }
+
+        .stat-label {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 330;
+        }
+
+        .result-info {
+            min-height: 24px;
+            margin: 0 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 350;
+        }
+
+        .table-card {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.018)),
+                var(--surface-strong);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.46);
+        }
+
+        .table-scroll {
+            max-height: 640px;
+            overflow: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--line-strong);
+            background: rgba(20, 20, 22, 0.94);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 520;
+            text-align: left;
+            letter-spacing: 0;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        td {
+            padding: 15px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+            color: #e8e8ed;
+            vertical-align: middle;
+            font-weight: 330;
+        }
+
+        tbody tr {
+            transition: background 0.16s ease;
+        }
+
+        tbody tr:hover td {
+            background: rgba(41, 151, 255, 0.075);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .hanzi {
+            width: 92px;
+            color: #ffffff;
+            font-size: 28px;
+            font-weight: 560;
+            line-height: 1;
+        }
+
+        .parts {
+            color: var(--blue-dark);
+            font-size: 15px;
+            font-weight: 420;
+        }
+
+        .empty-state {
+            padding: 52px 20px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 15px;
+            font-weight: 350;
+        }
+
+        .footnote {
+            margin-top: 18px;
+            padding: 18px 2px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            font-weight: 330;
+        }
+
+        .developer-footer {
+            margin: 26px auto 0;
+            padding: 18px 2px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #6e6e73;
+            font-size: 11px;
+            line-height: 1.7;
+            font-weight: 330;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                align-items: start;
+                min-height: auto;
+                gap: 28px;
+                padding-top: 20px;
+            }
+
+            h1 {
+                white-space: normal;
+            }
+
+            .hero-panel {
+                min-height: 220px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .nav-inner,
+            .page-shell {
+                width: min(100% - 28px, 1180px);
+            }
+
+            .nav-meta {
+                display: none;
+            }
+
+            .page-shell {
+                padding-top: 28px;
+            }
+
+            h1 {
+                font-size: 38px;
+                line-height: 1.04;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .search-panel {
+                padding: 16px;
+            }
+
+            .filter-head {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-scroll {
+                max-height: none;
+            }
+
+            th,
+            td {
+                padding: 13px 14px;
+            }
+
+            th:nth-child(4),
+            td:nth-child(4) {
+                display: none;
+            }
+
+            .hanzi {
+                width: 62px;
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="site-nav" aria-label="页面导航">
+    <div class="nav-inner">
+        <div class="brand">汉字零部件</div>
+        <div class="nav-meta">
+            <span>深色高级版</span>
+            <span>字体设计工具</span>
+        </div>
+    </div>
+</nav>
+
+<main class="page-shell">
+    <section class="hero" aria-labelledby="pageTitle">
+        <div>
+            <div class="eyebrow">Chinese Component Index · Dark Edition</div>
+            <h1 id="pageTitle">汉字零部件数据库</h1>
+            <div class="subtitle">为字体设计、字形研究和部件复用整理的轻量查询工具。输入任意部件或汉字，即刻定位相关字形。</div>
+        </div>
+        <aside class="hero-panel" aria-label="部件示例">
+            <div class="glyph-showcase">
+                <div class="glyph-tile">令</div>
+                <div class="glyph-tile">页</div>
+                <div class="glyph-tile">青</div>
+                <div class="glyph-tile">甬</div>
+                <div class="glyph-tile">亻</div>
+                <div class="glyph-tile">辶</div>
+            </div>
+            <p class="hero-note">从部件到汉字，也从汉字回看结构。深色背景降低界面存在感，把视觉重心交还给字形。</p>
+        </aside>
+    </section>
+
+    <section class="search-panel" aria-label="查询面板">
+        <div class="search-row">
+            <input type="text" class="search-box" id="searchInput" placeholder="搜索部件或汉字，如：令、页、青、甬、领">
+        </div>
+
+        <div class="filter-head">
+            <div class="label-row">
+                <span>按非成字部件筛选</span>
+                <span class="label-tip">已隐藏独立汉字，仅显示偏旁部首</span>
+            </div>
+            <span class="clear-filter" id="clearFilter" role="button" tabindex="0">清除筛选</span>
+        </div>
+
+        <div class="tabs" id="partTabs">
+            <button class="tab active" data-part="all">全部</button>
+        </div>
+
+        <div class="stats" aria-label="数据库统计">
+            <div class="stat">
+                <div class="stat-value" id="charCount">--</div>
+                <div class="stat-label">收录汉字</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="partCount">--</div>
+                <div class="stat-label">非成字部件</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">双向</div>
+                <div class="stat-label">搜索与筛选</div>
+            </div>
+        </div>
+
+        <div class="result-info">
+            <span id="resultInfo"></span>
+        </div>
+
+        <div class="table-card">
+            <div class="table-scroll">
+                <table id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>汉字</th>
+                        <th>包含部件</th>
+                        <th>主要拆分</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footnote">
+            <strong>使用方法：</strong>搜索“令”会显示所有由“令”组成的字，如“领、岭”；点击上方部件标签可快速筛选偏旁部首。
+        </div>
+    </section>
+
+    <footer class="developer-footer">
+        开发者：袁菲畅&nbsp;&nbsp;联系方式：yuanfeichang@163.com
+    </footer>
+</main>
+
+<script>
+    // ======================== 全汉字部件映射表（已补全所有指定汉字） ========================
+    const charToParts = {
+        "七": ["七"],
+        "万": ["万", "一", "勹"],
+        "三": ["三", "一"],
+        "上": ["上", "卜"],
+        "下": ["下", "卜"],
+        "不": ["不", "一", "丆"],
+        "与": ["与", "一"],
+        "专": ["专", "二", "厶"],
+        "业": ["业", "丨", "丷"],
+        "东": ["东", "七", "小"],
+        "丢": ["丢", "丿", "土", "厶"],
+        "两": ["两", "一", "从"],
+        "严": ["严", "一", "丿", "厂"],
+        "个": ["个", "人", "丨"],
+        "中": ["中", "口", "丨"],
+        "丹": ["丹", "丿", "月"],
+        "为": ["为", "丶", "力"],
+        "主": ["主", "丶", "王"],
+        "久": ["久", "夂"],
+        "之": ["之", "丶", "辶"],
+        "乌": ["乌", "丿", "弓"],
+        "乐": ["乐", "丿", "小"],
+        "乘": ["乘", "禾", "北"],
+        "九": ["九"],
+        "也": ["也", "乜", "丨"],
+        "习": ["习", "乙", "冫"],
+        "书": ["书", "彐", "丨"],
+        "买": ["买", "乛", "头"],
+        "了": ["了"],
+        "事": ["事", "一", "口", "彐"],
+        "二": ["二", "一"],
+        "云": ["云", "二", "厶"],
+        "互": ["互", "一", "彑"],
+        "五": ["五", "一", "口"],
+        "些": ["些", "此", "二"],
+        "交": ["交", "六", "乂"],
+        "产": ["产", "立", "丿"],
+        "享": ["享", "亠", "口", "子"],
+        "京": ["京", "亠", "口", "小"],
+        "亮": ["亮", "亠", "口", "儿"],
+        "亲": ["亲", "立", "木"],
+        "人": ["人"],
+        "什": ["亻", "十"],
+        "今": ["今", "人", "乛"],
+        "介": ["介", "人", "丨"],
+        "从": ["从", "人"],
+        "仓": ["仓", "人", "巳"],
+        "他": ["亻", "也"],
+        "付": ["亻", "寸"],
+        "仙": ["亻", "山"],
+        "代": ["亻", "弋"],
+        "以": ["以", "厶", "人"],
+        "仪": ["亻", "义"],
+        "们": ["亻", "门"],
+        "件": ["亻", "牛"],
+        "价": ["亻", "介"],
+        "份": ["亻", "分"],
+        "休": ["亻", "木"],
+        "优": ["亻", "尤"],
+        "会": ["人", "云"],
+        "传": ["亻", "专"],
+        "伴": ["亻", "半"],
+        "但": ["亻", "旦"],
+        "位": ["亻", "立"],
+        "低": ["亻", "氐"],
+        "住": ["亻", "主"],
+        "体": ["亻", "本"],
+        "佛": ["亻", "弗"],
+        "作": ["亻", "乍"],
+        "你": ["亻", "尔"],
+        "佣": ["亻", "用"],
+        "佳": ["亻", "圭"],
+        "使": ["亻", "史"],
+        "侠": ["亻", "夹"],
+        "侯": ["亻", "矦"],
+        "便": ["亻", "更"],
+        "促": ["亻", "足"],
+        "俑": ["亻", "甬"],
+        "保": ["亻", "呆"],
+        "信": ["亻", "言"],
+        "修": ["亻", "攸"],
+        "倍": ["亻", "咅"],
+        "倒": ["亻", "到"],
+        "候": ["亻", "侯"],
+        "值": ["亻", "直"],
+        "倾": ["亻", "顷"],
+        "假": ["亻", "叚"],
+        "做": ["亻", "故"],
+        "停": ["亻", "亭"],
+        "偶": ["亻", "禺"],
+        "储": ["亻", "诸"],
+        "像": ["亻", "象"],
+        "儿": ["儿"],
+        "允": ["厶", "儿"],
+        "元": ["二", "儿"],
+        "充": ["亠", "允"],
+        "先": ["牛", "儿"],
+        "光": ["光", "小", "儿"],
+        "免": ["免", "刀", "儿"],
+        "兑": ["兑", "口", "儿"],
+        "兔": ["兔", "刀", "儿"],
+        "入": ["入"],
+        "全": ["人", "王"],
+        "八": ["八"],
+        "公": ["八", "厶"],
+        "六": ["六", "亠"],
+        "共": ["共", "廿", "八"],
+        "关": ["关", "丷", "天"],
+        "兴": ["兴", "小", "一"],
+        "兵": ["兵", "丘", "八"],
+        "具": ["具", "且", "八"],
+        "典": ["典", "曲", "八"],
+        "养": ["养", "羊", "丿"],
+        "冈": ["冈", "门", "乂"],
+        "册": ["册", "冂", "卄"],
+        "再": ["再", "一", "冉"],
+        "写": ["写", "冖", "与"],
+        "军": ["军", "冖", "车"],
+        "农": ["农", "冖", "衣"],
+        "冬": ["冬", "夂", "两点"],
+        "冰": ["冫", "水"],
+        "冲": ["冫", "中"],
+        "凌": ["冫", "夌"],
+        "减": ["冫", "咸"],
+        "几": ["几"],
+        "出": ["出", "山"],
+        "击": ["击", "二", "山"],
+        "刀": ["刀"],
+        "分": ["八", "刀"],
+        "划": ["划", "戈", "刂"],
+        "则": ["贝", "刂"],
+        "初": ["初", "衣", "刀"],
+        "利": ["禾", "刂"],
+        "别": ["另", "刂"],
+        "到": ["至", "刂"],
+        "刷": ["刷", "尸", "巾", "刂"],
+        "券": ["券", "龹", "刀"],
+        "刻": ["亥", "刂"],
+        "前": ["前", "䒑", "月", "刂"],
+        "剑": ["佥", "刂"],
+        "力": ["力"],
+        "办": ["办", "力", "两点"],
+        "加": ["力", "口"],
+        "务": ["务", "夂", "力"],
+        "动": ["云", "力"],
+        "助": ["且", "力"],
+        "励": ["厉", "力"],
+        "募": ["莫", "力"],
+        "勤": ["堇", "力"],
+        "勿": ["勿"],
+        "匀": ["勹", "二"],
+        "包": ["勹", "巳"],
+        "化": ["化", "亻", "匕"],
+        "北": ["北", "丨", "匕"],
+        "匹": ["匹", "匚", "儿"],
+        "区": ["区", "匚", "乂"],
+        "医": ["医", "匚", "矢"],
+        "十": ["十"],
+        "千": ["千", "丿", "十"],
+        "升": ["升", "丿", "廾"],
+        "午": ["午", "人", "十"],
+        "半": ["半", "丷", "丨"],
+        "华": ["化", "十"],
+        "卓": ["卓", "卜", "早"],
+        "单": ["单", "丷", "田", "十"],
+        "卖": ["卖", "十", "买"],
+        "南": ["南", "十", "门", "￥"],
+        "博": ["十", "甫", "寸"],
+        "卡": ["卡", "上", "卜"],
+        "卫": ["卫", "卩", "一"],
+        "厂": ["厂"],
+        "历": ["厂", "力"],
+        "厉": ["厂", "万"],
+        "原": ["厂", "白", "小"],
+        "厢": ["厂", "相"],
+        "去": ["去", "土", "厶"],
+        "参": ["参", "厶", "大", "彡"],
+        "又": ["又"],
+        "友": ["友", "又"],
+        "双": ["双", "又"],
+        "反": ["反", "厂", "又"],
+        "发": ["发", "丿", "又"],
+        "取": ["耳", "又"],
+        "口": ["口"],
+        "古": ["十", "口"],
+        "只": ["口", "八"],
+        "叫": ["口", "丩"],
+        "可": ["丁", "口"],
+        "台": ["厶", "口"],
+        "史": ["口", "乂"],
+        "叶": ["口", "十"],
+        "号": ["口", "丂"],
+        "司": ["司", "乙", "口"],
+        "吃": ["口", "乞"],
+        "合": ["合", "人", "一", "口"],
+        "吉": ["士", "口"],
+        "同": ["同", "门", "口"],
+        "名": ["夕", "口"],
+        "后": ["后", "厂", "一口"],
+        "向": ["向", "丿", "门", "口"],
+        "吗": ["口", "马"],
+        "君": ["君", "尹", "口"],
+        "否": ["不", "口"],
+        "吧": ["口", "巴"],
+        "听": ["口", "斤"],
+        "启": ["户", "口"],
+        "吵": ["口", "少"],
+        "告": ["生", "口"],
+        "员": ["口", "贝"],
+        "周": ["周", "用", "口"],
+        "命": ["命", "人", "叩"],
+        "和": ["禾", "口"],
+        "咖": ["口", "加"],
+        "咪": ["口", "米"],
+        "品": ["品", "口"],
+        "哥": ["哥", "可", "可"],
+        "哭": ["哭", "口", "犬"],
+        "唐": ["唐", "庚", "口"],
+        "售": ["售", "隹", "口"],
+        "唱": ["口", "昌"],
+        "啡": ["口", "非"],
+        "啦": ["口", "拉"],
+        "善": ["善", "羊", "口"],
+        "喊": ["口", "咸"],
+        "喜": ["喜", "壴", "口"],
+        "喝": ["口", "曷"],
+        "嘉": ["嘉", "壴", "加"],
+        "器": ["器", "口", "犬"],
+        "四": ["四"],
+        "回": ["回", "口"],
+        "因": ["因", "口", "大"],
+        "团": ["团", "口", "才"],
+        "园": ["园", "口", "元"],
+        "围": ["围", "口", "韦"],
+        "国": ["国", "口", "玉"],
+        "图": ["图", "口", "冬"],
+        "土": ["土"],
+        "圣": ["又", "土"],
+        "在": ["在", "一", "亻", "土"],
+        "地": ["土", "也"],
+        "圳": ["土", "川"],
+        "场": ["土", "弓"],
+        "圾": ["土", "及"],
+        "址": ["土", "止"],
+        "坐": ["坐", "从", "土"],
+        "块": ["土", "夬"],
+        "垃": ["土", "立"],
+        "型": ["刑", "土"],
+        "城": ["土", "成"],
+        "域": ["土", "或"],
+        "基": ["其", "土"],
+        "堆": ["土", "隹"],
+        "堵": ["土", "者"],
+        "塔": ["土", "荅"],
+        "境": ["土", "竟"],
+        "墙": ["土", "啬"],
+        "增": ["土", "曾"],
+        "壁": ["辟", "土"],
+        "士": ["士"],
+        "声": ["声", "士", "尸"],
+        "处": ["处", "夂", "卜"],
+        "复": ["复", "人", "日", "夂"],
+        "夏": ["夏", "一", "自", "夂"],
+        "夕": ["夕"],
+        "外": ["夕", "卜"],
+        "多": ["多", "夕"],
+        "夜": ["夜", "亠", "夕"],
+        "大": ["大"],
+        "天": ["天", "一", "大"],
+        "太": ["太", "大", "丶"],
+        "头": ["头", "大", "两点"],
+        "奇": ["大", "可"],
+        "奔": ["奔", "大", "卉"],
+        "奖": ["奖", "丬", "大"],
+        "套": ["套", "大", "镸"],
+        "女": ["女"],
+        "奶": ["女", "乃"],
+        "她": ["女", "也"],
+        "好": ["女", "子"],
+        "妈": ["女", "马"],
+        "妹": ["女", "未"],
+        "始": ["女", "台"],
+        "姐": ["女", "且"],
+        "姬": ["女", "臣"],
+        "子": ["子"],
+        "字": ["字", "宀", "子"],
+        "季": ["禾", "子"],
+        "学": ["学", "小", "乛", "子"],
+        "孩": ["子", "亥"],
+        "宁": ["宁", "宀", "丁"],
+        "安": ["宀", "女"],
+        "完": ["宀", "元"],
+        "官": ["官", "宀", "吕"],
+        "定": ["宀", "正"],
+        "宜": ["宀", "且"],
+        "实": ["实", "宀", "头"],
+        "宠": ["宀", "龙"],
+        "客": ["宀", "各"],
+        "宣": ["宀", "亘"],
+        "室": ["宀", "至"],
+        "家": ["家", "宀", "豕"],
+        "容": ["宀", "谷"],
+        "宽": ["宀", "苋"],
+        "寒": ["寒", "宀", "井", "两点"],
+        "察": ["察", "宀", "祭"],
+        "对": ["又", "寸"],
+        "寺": ["土", "寸"],
+        "寻": ["寻", "彐", "寸"],
+        "导": ["导", "巳", "寸"],
+        "射": ["身", "寸"],
+        "小": ["小"],
+        "少": ["少", "小", "丿"],
+        "尔": ["尔", "人", "小"],
+        "就": ["就", "京", "尤"],
+        "尺": ["尺", "尸", "乀"],
+        "尽": ["尽", "尺", "两点"],
+        "局": ["局", "尸", "句"],
+        "展": ["展", "尸", "共", "衣"],
+        "属": ["属", "尸", "禹"],
+        "山": ["山"],
+        "岁": ["山", "夕"],
+        "岭": ["山", "令"],
+        "岸": ["山", "厈"],
+        "峰": ["山", "夆"],
+        "川": ["川"],
+        "工": ["工"],
+        "差": ["差", "羊", "工"],
+        "己": ["己"],
+        "已": ["已"],
+        "巴": ["巴"],
+        "巾": ["巾"],
+        "市": ["市", "亠", "巾"],
+        "布": ["布", "一", "巾"],
+        "师": ["师", "丨", "帀"],
+        "帖": ["巾", "占"],
+        "带": ["带", "卅", "巾"],
+        "帮": ["邦", "巾"],
+        "常": ["常", "小", "口", "巾"],
+        "干": ["干"],
+        "平": ["平", "干", "丷"],
+        "年": ["年", "人", "丨", "一"],
+        "幸": ["幸", "土", "￥"],
+        "广": ["广"],
+        "庆": ["广", "大"],
+        "床": ["广", "木"],
+        "库": ["广", "车"],
+        "店": ["广", "占"],
+        "度": ["度", "广", "廿", "又"],
+        "座": ["广", "坐"],
+        "开": ["开", "一", "廾"],
+        "弃": ["弃", "亠", "廾"],
+        "式": ["式", "弋", "工"],
+        "引": ["弓", "丨"],
+        "弟": ["弟", "丷", "弓", "丨"],
+        "张": ["弓", "长"],
+        "弦": ["弓", "玄"],
+        "强": ["弓", "虽"],
+        "当": ["当", "小", "彐"],
+        "录": ["录", "彐", "水"],
+        "彩": ["彩", "采", "彡"],
+        "往": ["往", "彳", "主"],
+        "待": ["待", "彳", "寺"],
+        "很": ["很", "彳", "艮"],
+        "徒": ["徒", "彳", "走"],
+        "得": ["得", "彳", "曰", "一寸"],
+        "徙": ["徙", "彳", "止", "龰"],
+        "德": ["德", "彳", "十", "四", "一", "心"],
+        "心": ["心"],
+        "必": ["必", "心", "丿"],
+        "快": ["快", "忄", "夬"],
+        "态": ["太", "心"],
+        "性": ["忄", "生"],
+        "总": ["总", "丷", "口", "心"],
+        "恒": ["忄", "亘"],
+        "恩": ["因", "心"],
+        "恭": ["共", "心"],
+        "息": ["自", "心"],
+        "悉": ["悉", "采", "心"],
+        "您": ["你", "心"],
+        "情": ["忄", "青"],
+        "惊": ["忄", "京"],
+        "惠": ["惠", "叀", "心"],
+        "想": ["相", "心"],
+        "意": ["音", "心"],
+        "感": ["咸", "心"],
+        "愿": ["原", "心"],
+        "成": ["成", "戊", "丁"],
+        "我": ["我", "手", "戈"],
+        "战": ["占", "戈"],
+        "戳": ["翟", "戈"],
+        "户": ["户"],
+        "所": ["所", "户", "斤"],
+        "扁": ["扁", "户", "册"],
+        "手": ["手"],
+        "才": ["才"],
+        "打": ["扌", "丁"],
+        "扣": ["扌", "口"],
+        "扩": ["扌", "广"],
+        "扫": ["扌", "彐"],
+        "扰": ["扌", "尤"],
+        "扶": ["扌", "夫"],
+        "找": ["扌", "戈"],
+        "承": ["承", "子", "水"],
+        "把": ["扌", "巴"],
+        "投": ["扌", "殳"],
+        "折": ["扌", "斤"],
+        "抢": ["扌", "仓"],
+        "护": ["扌", "户"],
+        "报": ["扌", "卩", "又"],
+        "抱": ["扌", "包"],
+        "抵": ["扌", "氐"],
+        "押": ["扌", "甲"],
+        "抽": ["扌", "由"],
+        "担": ["扌", "旦"],
+        "拆": ["扌", "斥"],
+        "拉": ["扌", "立"],
+        "拍": ["扌", "白"],
+        "招": ["扌", "召"],
+        "择": ["扌", "睪"],
+        "拼": ["扌", "并"],
+        "拿": ["合", "手"],
+        "持": ["扌", "寺"],
+        "指": ["扌", "旨"],
+        "按": ["扌", "安"],
+        "挑": ["扌", "兆"],
+        "损": ["扌", "员"],
+        "换": ["扌", "奂"],
+        "捷": ["扌", "疌"],
+        "掉": ["扌", "卓"],
+        "排": ["扌", "非"],
+        "探": ["扌", "罙"],
+        "接": ["扌", "妾"],
+        "推": ["扌", "隹"],
+        "提": ["扌", "是"],
+        "搞": ["扌", "高"],
+        "搬": ["扌", "般"],
+        "搭": ["扌", "荅"],
+        "摇": ["扌", "䍃"],
+        "摘": ["扌", "啇"],
+        "支": ["支", "十", "又"],
+        "收": ["收", "丩", "攵"],
+        "攻": ["工", "攵"],
+        "放": ["方", "攵"],
+        "故": ["古", "攵"],
+        "效": ["交", "攵"],
+        "教": ["孝", "攵"],
+        "敞": ["尚", "攵"],
+        "散": ["散", "共", "月", "攵"],
+        "数": ["娄", "攵"],
+        "整": ["正", "敕"],
+        "文": ["文"],
+        "斗": ["斗"],
+        "断": ["断", "米", "斤"],
+        "新": ["亲", "斤"],
+        "方": ["方"],
+        "旅": ["旅", "方", "人", "衣"],
+        "无": ["无"],
+        "日": ["日"],
+        "旦": ["旦", "日", "一"],
+        "早": ["日", "十"],
+        "时": ["日", "寸"],
+        "明": ["日", "月"],
+        "易": ["易", "日", "勿"],
+        "星": ["日", "生"],
+        "春": ["春", "日", "屯"],
+        "昨": ["日", "乍"],
+        "是": ["日", "正"],
+        "晚": ["日", "免"],
+        "景": ["日", "京"],
+        "暑": ["日", "者"],
+        "暖": ["日", "爰"],
+        "更": ["更", "一", "日", "乂"],
+        "最": ["日", "取"],
+        "月": ["月"],
+        "有": ["月", "一"],
+        "朋": ["月", "月"],
+        "服": ["服", "月", "卩", "又"],
+        "望": ["望", "亡", "月", "王"],
+        "期": ["其", "月"],
+        "木": ["木"],
+        "未": ["未", "木", "一"],
+        "末": ["末", "木", "一"],
+        "本": ["本", "木", "一"],
+        "机": ["木", "几"],
+        "杀": ["杀", "乂", "木"],
+        "权": ["木", "又"],
+        "李": ["木", "子"],
+        "村": ["木", "寸"],
+        "束": ["束", "木", "口"],
+        "条": ["条", "夂", "木"],
+        "来": ["来", "木", "一"],
+        "杯": ["木", "不"],
+        "板": ["木", "反"],
+        "极": ["木", "及"],
+        "林": ["林", "木"],
+        "果": ["果", "田", "木"],
+        "枯": ["木", "古"],
+        "查": ["木", "旦"],
+        "柴": ["此", "木"],
+        "树": ["木", "对"],
+        "校": ["木", "交"],
+        "样": ["木", "羊"],
+        "格": ["木", "各"],
+        "桌": ["桌", "卜", "早", "木"],
+        "桔": ["木", "吉"],
+        "桥": ["木", "乔"],
+        "楂": ["木", "查"],
+        "楼": ["木", "娄"],
+        "榜": ["木", "旁"],
+        "槛": ["木", "监"],
+        "橙": ["木", "登"],
+        "次": ["次", "冫", "欠"],
+        "欢": ["又", "欠"],
+        "款": ["款", "士", "示", "欠"],
+        "歉": ["歉", "兼", "欠"],
+        "正": ["正"],
+        "母": ["母"],
+        "每": ["每", "人", "母"],
+        "比": ["比"],
+        "毕": ["毕", "比", "十"],
+        "毛": ["毛"],
+        "民": ["民"],
+        "气": ["气"],
+        "水": ["水"],
+        "求": ["求", "一", "水"],
+        "汇": ["氵", "匚"],
+        "汗": ["氵", "干"],
+        "江": ["氵", "工"],
+        "池": ["氵", "也"],
+        "汽": ["氵", "气"],
+        "沙": ["氵", "少"],
+        "没": ["氵", "殳"],
+        "河": ["氵", "可"],
+        "油": ["氵", "由"],
+        "泉": ["白", "水"],
+        "法": ["氵", "去"],
+        "洗": ["氵", "先"],
+        "活": ["氵", "舌"],
+        "浏": ["氵", "刘"],
+        "浓": ["氵", "农"],
+        "浪": ["氵", "良"],
+        "海": ["氵", "每"],
+        "消": ["氵", "肖"],
+        "淇": ["氵", "其"],
+        "淋": ["氵", "林"],
+        "深": ["氵", "罙"],
+        "添": ["氵", "忝"],
+        "清": ["氵", "青"],
+        "港": ["氵", "巷"],
+        "游": ["氵", "斿"],
+        "满": ["氵", "㒼"],
+        "滴": ["氵", "啇"],
+        "演": ["氵", "寅"],
+        "火": ["火"],
+        "点": ["占", "灬"],
+        "热": ["执", "灬"],
+        "焕": ["火", "奂"],
+        "照": ["昭", "灬"],
+        "熊": ["能", "灬"],
+        "熟": ["孰", "灬"],
+        "燥": ["火", "喿"],
+        "爱": ["爱", "爫", "冖", "心", "夂"],
+        "版": ["片", "反"],
+        "牛": ["牛"],
+        "物": ["牛", "勿"],
+        "特": ["牛", "寺"],
+        "状": ["丬", "犬"],
+        "狂": ["犬", "王"],
+        "狗": ["犬", "句"],
+        "狠": ["犬", "艮"],
+        "猪": ["犬", "者"],
+        "猫": ["犬", "苗"],
+        "玉": ["玉"],
+        "王": ["王"],
+        "玩": ["王", "元"],
+        "现": ["王", "见"],
+        "班": ["班", "王", "刂", "王"],
+        "球": ["王", "求"],
+        "理": ["王", "里"],
+        "瓜": ["瓜"],
+        "生": ["生"],
+        "用": ["用"],
+        "田": ["田"],
+        "由": ["由"],
+        "电": ["电", "曰", "乚"],
+        "畅": ["畅", "申", "易"],
+        "留": ["留", "卯", "田"],
+        "略": ["田", "各"],
+        "白": ["白"],
+        "百": ["一", "白"],
+        "的": ["白", "勺"],
+        "皮": ["皮"],
+        "益": ["益", "丷", "一", "皿"],
+        "盒": ["合", "皿"],
+        "目": ["目"],
+        "盲": ["亡", "目"],
+        "相": ["木", "目"],
+        "省": ["少", "目"],
+        "看": ["手", "目"],
+        "真": ["真", "十", "具"],
+        "知": ["矢", "口"],
+        "短": ["矢", "豆"],
+        "码": ["石", "马"],
+        "砍": ["石", "欠"],
+        "确": ["石", "角"],
+        "碎": ["石", "卒"],
+        "磅": ["石", "旁"],
+        "示": ["示"],
+        "礼": ["示", "乚"],
+        "社": ["示", "土"],
+        "神": ["示", "申"],
+        "票": ["票", "西", "示"],
+        "福": ["示", "畐"],
+        "离": ["离", "亠", "内", "禸"],
+        "秋": ["禾", "火"],
+        "种": ["禾", "中"],
+        "科": ["禾", "斗"],
+        "秒": ["禾", "少"],
+        "租": ["禾", "且"],
+        "程": ["禾", "呈"],
+        "立": ["立"],
+        "站": ["立", "占"],
+        "章": ["立", "早"],
+        "端": ["立", "耑"],
+        "笔": ["⺮", "毛"],
+        "符": ["⺮", "付"],
+        "第": ["⺮", "弟"],
+        "等": ["⺮", "寺"],
+        "答": ["⺮", "合"],
+        "策": ["⺮", "朿"],
+        "签": ["⺮", "佥"],
+        "算": ["⺮", "具"],
+        "管": ["⺮", "官"],
+        "篷": ["⺮", "逢"],
+        "籍": ["⺮", "耒", "昔"],
+        "米": ["米"],
+        "类": ["米", "大"],
+        "粽": ["米", "宗"],
+        "索": ["索", "十", "宀", "糸"],
+        "累": ["田", "糸"],
+        "红": ["纟", "工"],
+        "约": ["纟", "勺"],
+        "级": ["纟", "及"],
+        "纪": ["纟", "己"],
+        "线": ["纟", "戋"],
+        "细": ["纟", "田"],
+        "绍": ["纟", "召"],
+        "经": ["纟", "圣"],
+        "结": ["纟", "吉"],
+        "给": ["纟", "合"],
+        "络": ["纟", "各"],
+        "继": ["纟", "㡭"],
+        "续": ["纟", "卖"],
+        "网": ["网", "门", "乂"],
+        "置": ["罒", "直"],
+        "群": ["君", "羊"],
+        "翻": ["番", "羽"],
+        "耀": ["光", "翟"],
+        "者": ["者", "老", "日"],
+        "联": ["耳", "关"],
+        "聚": ["取", "乑"],
+        "肆": ["肆", "镸", "聿"],
+        "股": ["月", "殳"],
+        "肤": ["月", "夫"],
+        "肯": ["止", "月"],
+        "胀": ["月", "长"],
+        "能": ["能", "厶", "月"],
+        "膨": ["月", "彭"],
+        "自": ["自"],
+        "至": ["至"],
+        "色": ["色", "刀", "巴"],
+        "节": ["节", "艹", "卩"],
+        "芝": ["艹", "之"],
+        "花": ["艹", "化"],
+        "草": ["艹", "早"],
+        "荐": ["艹", "存"],
+        "荣": ["艹", "荧"],
+        "获": ["艹", "犾"],
+        "营": ["艹", "宫"],
+        "薪": ["艹", "新"],
+        "蜜": ["宓", "虫"],
+        "行": ["行", "彳", "亍"],
+        "补": ["衣", "卜"],
+        "被": ["衣", "皮"],
+        "西": ["西"],
+        "要": ["西", "女"],
+        "观": ["又", "见"],
+        "规": ["夫", "见"],
+        "视": ["示", "见"],
+        "览": ["览", "丨", "臣", "见"],
+        "角": ["角"],
+        "解": ["角", "刀", "牛"],
+        "触": ["角", "虫"],
+        "言": ["言"],
+        "计": ["讠", "十"],
+        "订": ["讠", "丁"],
+        "认": ["讠", "人"],
+        "让": ["讠", "上"],
+        "训": ["讠", "川"],
+        "记": ["讠", "己"],
+        "许": ["讠", "午"],
+        "论": ["讠", "仑"],
+        "设": ["讠", "殳"],
+        "评": ["讠", "平"],
+        "诉": ["讠", "斥"],
+        "诗": ["讠", "寺"],
+        "诚": ["讠", "成"],
+        "详": ["讠", "羊"],
+        "说": ["讠", "兑"],
+        "请": ["讠", "青"],
+        "课": ["讠", "果"],
+        "豪": ["豪", "高", "豕"],
+        "负": ["负", "刀", "贝"],
+        "财": ["贝", "才"],
+        "账": ["贝", "长"],
+        "货": ["贝", "化"],
+        "购": ["贝", "勾"],
+        "贴": ["贝", "占"],
+        "费": ["弗", "贝"],
+        "资": ["次", "贝"],
+        "赏": ["尚", "贝"],
+        "赔": ["贝", "咅"],
+        "赚": ["贝", "兼"],
+        "赛": ["塞", "贝"],
+        "赠": ["贝", "曾"],
+        "赢": ["赢", "亡", "口", "月", "贝", "凡"],
+        "赶": ["走", "干"],
+        "起": ["走", "己"],
+        "超": ["走", "召"],
+        "足": ["足"],
+        "跑": ["足", "包"],
+        "跨": ["足", "夸"],
+        "路": ["足", "各"],
+        "践": ["足", "戋"],
+        "踏": ["足", "沓"],
+        "身": ["身"],
+        "躺": ["身", "尚"],
+        "车": ["车"],
+        "轨": ["车", "九"],
+        "转": ["车", "专"],
+        "轮": ["车", "仑"],
+        "载": ["载", "车", "戈"],
+        "边": ["辶", "力"],
+        "达": ["辶", "大"],
+        "迁": ["辶", "千"],
+        "过": ["辶", "寸"],
+        "运": ["辶", "云"],
+        "近": ["辶", "斤"],
+        "返": ["辶", "反"],
+        "还": ["辶", "不"],
+        "这": ["辶", "文"],
+        "进": ["辶", "井"],
+        "远": ["辶", "元"],
+        "连": ["辶", "车"],
+        "迪": ["辶", "由"],
+        "退": ["辶", "艮"],
+        "送": ["辶", "关"],
+        "选": ["辶", "先"],
+        "递": ["辶", "弟"],
+        "途": ["辶", "余"],
+        "通": ["辶", "甬"],
+        "逛": ["辶", "狂"],
+        "速": ["辶", "束"],
+        "遇": ["辶", "禺"],
+        "道": ["辶", "首"],
+        "邀": ["辶", "敫"],
+        "那": ["那", "刀", "二", "阝"],
+        "部": ["咅", "阝"],
+        "都": ["者", "阝"],
+        "酒": ["酒", "氵", "酉"],
+        "酬": ["酉", "州"],
+        "醒": ["酉", "星"],
+        "里": ["里"],
+        "重": ["重"],
+        "量": ["量", "日", "一", "里"],
+        "金": ["金"],
+        "钟": ["钅", "中"],
+        "钱": ["钅", "戋"],
+        "铁": ["钅", "失"],
+        "锁": ["钅", "小", "贝"],
+        "锦": ["钅", "帛"],
+        "键": ["钅", "建"],
+        "长": ["长"],
+        "门": ["门"],
+        "闪": ["门", "人"],
+        "闭": ["门", "才"],
+        "问": ["门", "口"],
+        "闯": ["门", "马"],
+        "间": ["门", "日"],
+        "阅": ["门", "兑"],
+        "阳": ["阝", "日"],
+        "阴": ["阝", "月"],
+        "附": ["阝", "付"],
+        "陌": ["阝", "百"],
+        "降": ["阝", "夅"],
+        "限": ["阝", "艮"],
+        "随": ["阝", "遀"],
+        "障": ["阝", "章"],
+        "集": ["隹", "木"],
+        "雨": ["雨"],
+        "青": ["青"],
+        "面": ["面"],
+        "音": ["立", "日"],
+        "顺": ["川", "页"],
+        "顾": ["厄", "页"],
+        "预": ["予", "页"],
+        "领": ["令", "页"],
+        "题": ["是", "页"],
+        "额": ["客", "页"],
+        "风": ["风"],
+        "食": ["食"],
+        "餐": ["餐", "食", "又"],
+        "饭": ["食", "反"],
+        "饮": ["食", "欠"],
+        "首": ["首"],
+        "香": ["禾", "日"],
+        "马": ["马"],
+        "驾": ["加", "马"],
+        "验": ["马", "佥"],
+        "骑": ["马", "奇"],
+        "高": ["高"],
+        "鲤": ["鱼", "里"],
+        "鹊": ["昔", "鸟"],
+        "黑": ["黑"],
+        // 补充缺失的独立汉字
+        "丁": ["丁"],
+        "且": ["且"],
+        "乃": ["乃"],
+        "乇": ["乇"],
+        "义": ["义"],
+        "乍": ["乍"],
+        "予": ["予"],
+        "兀": ["兀"],
+        "卅": ["卅"],
+        "卜": ["卜"],
+        "寸": ["寸"],
+        "屮": ["屮"]
+    };
+
+    // 常用汉字参考拆解库：仅在当前数据库无结果时启用，用于给未收录字提供参考匹配。
+    const commonReferenceParts = {
+        "一": ["一"],
+        "于": ["于", "二", "丨"],
+        "而": ["而", "一", "冂"],
+        "着": ["羊", "目"],
+        "如": ["女", "口"],
+        "制": ["牛", "巾", "刂"],
+        "应": ["广", "兴"],
+        "它": ["宀", "匕"],
+        "其": ["甘", "八"],
+        "然": ["月", "犬", "灬"],
+        "政": ["正", "攵"],
+        "形": ["开", "彡"],
+        "表": ["龶", "衣"],
+        "各": ["夂", "口"],
+        "内": ["冂", "人"],
+        "么": ["丿", "厶"],
+        "或": ["戈", "口", "一"],
+        "质": ["厂", "十", "贝"],
+        "此": ["止", "匕"],
+        "变": ["亦", "又"],
+        "建": ["廴", "聿"],
+        "系": ["丿", "糸"],
+        "并": ["丷", "开"],
+        "直": ["十", "目", "一"],
+        "党": ["尚", "儿"],
+        "料": ["米", "斗"],
+        "象": ["象", "刀", "豕"],
+        "革": ["廿", "口", "十"],
+        "及": ["乃", "又"],
+        "老": ["耂", "匕"],
+        "流": ["氵", "㐬", "亠", "厶", "川"],
+        "统": ["纟", "充"],
+        "较": ["车", "交"],
+        "将": ["丬", "夕", "寸"],
+        "组": ["纟", "且"],
+        "见": ["冂", "儿"],
+        "根": ["木", "艮"],
+        "决": ["冫", "夬"],
+        "任": ["亻", "壬"],
+        "据": ["扌", "居", "尸", "古"],
+        "队": ["阝", "人"],
+        "即": ["艮", "卩"],
+        "治": ["氵", "台"],
+        "造": ["辶", "告"],
+        "压": ["厂", "土", "丶"],
+        "志": ["士", "心"],
+        "世": ["廿", "一"],
+        "争": ["刀", "彐", "亅"],
+        "济": ["氵", "齐"],
+        "阶": ["阝", "介"],
+        "思": ["田", "心"],
+        "术": ["木", "丶"],
+        "受": ["爫", "冖", "又"],
+        "证": ["讠", "正"],
+        "改": ["己", "攵"],
+        "美": ["羊", "大"],
+        "采": ["爫", "木"],
+        "切": ["七", "刀"],
+        "例": ["亻", "列", "歹", "刂"],
+        "走": ["土", "龰"],
+        "积": ["禾", "只"],
+        "议": ["讠", "义"],
+        "话": ["讠", "舌", "千", "口"],
+        "空": ["穴", "工"],
+        "况": ["冫", "兄", "口", "儿"],
+        "温": ["氵", "日", "皿"],
+        "步": ["止", "少"],
+        "石": ["厂", "口"],
+        "需": ["雨", "而"],
+        "段": ["殳"],
+        "研": ["石", "开"],
+        "界": ["田", "介"],
+        "律": ["彳", "聿"],
+        "究": ["穴", "九"],
+        "越": ["走", "戉", "戈"],
+        "织": ["纟", "只"],
+        "装": ["壮", "衣", "丬", "士"],
+        "影": ["景", "彡", "日", "京"],
+        "众": ["人", "从"],
+        "须": ["彡", "页"],
+        "际": ["阝", "示"],
+        "商": ["亠", "丷", "冂", "口", "儿"],
+        "非": ["非"],
+        "难": ["又", "隹"],
+        "矿": ["石", "广"],
+        "委": ["禾", "女"],
+        "素": ["龶", "糸"],
+        "技": ["扌", "支", "十", "又"],
+        "备": ["夂", "田"],
+        "列": ["歹", "刂"],
+        "响": ["口", "向"],
+        "般": ["舟", "殳"],
+        "劳": ["艹", "冖", "力"],
+        "酸": ["酉", "夋"],
+        "克": ["古", "儿"],
+        "何": ["亻", "可"],
+        "除": ["阝", "余"],
+        "消": ["氵", "肖", "小", "月"],
+        "构": ["木", "勾"],
+        "府": ["广", "付"],
+        "称": ["禾", "尔"],
+        "准": ["冫", "隹"],
+        "精": ["米", "青"],
+        "率": ["玄", "十"],
+        "族": ["方", "矢"],
+        "维": ["纟", "隹"],
+        "标": ["木", "示"],
+        "存": ["一", "亻", "子"],
+        "斯": ["其", "斤"],
+        "院": ["阝", "完"],
+        "眼": ["目", "艮"],
+        "派": ["氵", "厂", "氏"],
+        "层": ["尸", "云"],
+        "片": ["片"],
+        "却": ["去", "卩"],
+        "育": ["亠", "厶", "月"],
+        "识": ["讠", "只"],
+        "适": ["辶", "舌"],
+        "圆": ["囗", "员"],
+        "调": ["讠", "周"],
+        "县": ["且", "厶"],
+        "该": ["讠", "亥"],
+        "龙": ["龙", "尤", "丿"],
+        "飞": ["飞"],
+        "语": ["讠", "吾", "五", "口"],
+        "谢": ["讠", "身", "寸"],
+        "湖": ["氵", "胡", "古", "月", "十", "口"],
+        "晴": ["日", "青"],
+        "睛": ["目", "青"],
+        "慢": ["忄", "曼", "日", "罒", "又"],
+        "懂": ["忄", "董", "艹", "重"],
+        "微": ["彳", "山", "几", "攵"],
+        "魏": ["委", "鬼", "禾", "女"],
+        "输": ["车", "俞", "人", "月", "刂"],
+        "码": ["石", "马"],
+        "笔": ["竹", "毛"],
+        "泊": ["氵", "白"],
+        "河": ["氵", "可"],
+        "洋": ["氵", "羊"]
+    };
+
+    Object.assign(commonReferenceParts, {
+        "牌": ["片", "卑", "白", "十"],
+        "袁": ["土", "口", "衣"],
+        "被": ["衤", "皮"],
+        "补": ["衤", "卜"],
+        "袄": ["衤", "夭"],
+        "袜": ["衤", "末"],
+        "袖": ["衤", "由"],
+        "裙": ["衤", "君"],
+        "裤": ["衤", "库", "广", "车"],
+        "裸": ["衤", "果"],
+        "褐": ["衤", "曷"],
+        "神": ["礻", "申"],
+        "社": ["礻", "土"],
+        "礼": ["礻", "乚"],
+        "视": ["礻", "见"],
+        "祝": ["礻", "兄", "口", "儿"],
+        "祖": ["礻", "且"],
+        "祥": ["礻", "羊"],
+        "福": ["礻", "畐", "一", "口", "田"],
+        "饭": ["饣", "反"],
+        "馆": ["饣", "官"],
+        "饱": ["饣", "包"],
+        "饼": ["饣", "并"],
+        "饿": ["饣", "我"],
+        "猫": ["犭", "苗", "艹", "田"],
+        "狗": ["犭", "句", "勹", "口"],
+        "猪": ["犭", "者"],
+        "猛": ["犭", "孟", "子", "皿"],
+        "独": ["犭", "虫"],
+        "狐": ["犭", "瓜"],
+        "船": ["舟", "口", "几"],
+        "航": ["舟", "亢", "亠", "几"],
+        "舰": ["舟", "见"],
+        "笑": ["竹", "夭"],
+        "第": ["竹", "弟"],
+        "答": ["竹", "合"],
+        "等": ["竹", "寺", "土", "寸"],
+        "签": ["竹", "佥"],
+        "简": ["竹", "间", "门", "日"],
+        "算": ["竹", "目", "廾"],
+        "篇": ["竹", "扁", "户", "册"],
+        "箱": ["竹", "相", "木", "目"],
+        "黄": ["廿", "由", "八"],
+        "蓝": ["艹", "监", "皿"],
+        "绿": ["纟", "录"],
+        "紫": ["此", "糸"],
+        "旗": ["方", "其"],
+        "旅": ["方", "人", "氏"],
+        "施": ["方", "人", "也"],
+        "房": ["户", "方"],
+        "扁": ["户", "册"],
+        "遍": ["辶", "扁"],
+        "编": ["纟", "扁"],
+        "骗": ["马", "扁"],
+        "病": ["疒", "丙"],
+        "疼": ["疒", "冬"],
+        "痛": ["疒", "甬"],
+        "瘦": ["疒", "叟"],
+        "款": ["士", "示", "欠"],
+        "帮": ["邦", "丰", "阝", "巾"],
+        "静": ["青", "争"],
+        "舞": ["舛"],
+        "鞋": ["革", "圭", "土"],
+        "瓶": ["并", "瓦"],
+        "球": ["王", "求"],
+        "班": ["王", "刂"],
+        "玩": ["王", "元"],
+        "环": ["王", "不"],
+        "项": ["工", "页"],
+        "顶": ["丁", "页"],
+        "颗": ["果", "页"],
+        "愿": ["原", "心"],
+        "颜": ["彦", "页"]
+    });
+
+    const partAliasGroups = [
+        ["言", "讠"],
+        ["水", "氵"],
+        ["心", "忄"],
+        ["手", "扌"],
+        ["金", "钅"],
+        ["衣", "衤"],
+        ["示", "礻"],
+        ["食", "饣"],
+        ["犬", "犭"],
+        ["阜", "邑", "阝"],
+        ["糸", "纟"],
+        ["火", "灬"],
+        ["网", "罒"],
+        ["口", "囗"]
+    ];
+
+    const partAliasMap = new Map();
+    partAliasGroups.forEach(group => {
+        group.forEach(part => {
+            partAliasMap.set(part, group);
+        });
+    });
+
+    const weakMatchParts = new Set([
+        "一", "丨", "丿", "丶", "乀", "乙", "亅", "二", "三",
+        "人", "口", "冂", "大", "小", "日", "月"
+    ]);
+
+    // 生成数据库
+    const database = Object.keys(charToParts).map(char => {
+        const parts = charToParts[char];
+        const radical = parts[0] || char;
+        const partner = parts.slice(1).join("+") || "独体";
+        return {
+            char: char,
+            radical: radical,
+            partner: partner,
+            allParts: parts,
+            note: parts.length > 1 ? `${radical} + ${partner}` : "独体字"
+        };
+    });
+
+    // 收集所有部件，并过滤掉那些本身就是独立汉字的部件
+    const allPartsSet = new Set();
+    database.forEach(item => item.allParts.forEach(p => allPartsSet.add(p)));
+    const nonCharParts = [...allPartsSet].filter(p => !(p in charToParts)).sort();
+
+    // 渲染部件标签
+    const partTabs = document.getElementById('partTabs');
+    nonCharParts.forEach(part => {
+        const btn = document.createElement('button');
+        btn.className = 'tab';
+        btn.dataset.part = part;
+        btn.textContent = part;
+        partTabs.appendChild(btn);
+    });
+
+    // 交互逻辑
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.querySelector('#dataTable tbody');
+    const resultInfo = document.getElementById('resultInfo');
+    const clearFilterBtn = document.getElementById('clearFilter');
+    const charCount = document.getElementById('charCount');
+    const partCount = document.getElementById('partCount');
+
+    let activePartFilter = null;
+
+    charCount.textContent = database.length;
+    partCount.textContent = nonCharParts.length;
+
+    function getPartAliases(part) {
+        return partAliasMap.get(part) || [part];
+    }
+
+    function expandParts(parts) {
+        const expanded = new Set();
+        parts.forEach(part => {
+            expanded.add(part);
+            getPartAliases(part).forEach(alias => expanded.add(alias));
+        });
+        return expanded;
+    }
+
+    function hasAliasOverlap(part, expandedTargetParts) {
+        return getPartAliases(part).some(alias => expandedTargetParts.has(alias));
+    }
+
+    function uniqueParts(parts) {
+        return [...new Set(parts.filter(Boolean))];
+    }
+
+    function buildReferenceSearch(char) {
+        const referenceParts = commonReferenceParts[char];
+        if (!referenceParts) return null;
+
+        const normalizedParts = uniqueParts(referenceParts);
+        const scoredMatches = database.map(item => {
+            const itemExpandedParts = expandParts(item.allParts);
+            const score = normalizedParts.reduce((total, part) => {
+                if (!hasAliasOverlap(part, itemExpandedParts)) return total;
+                return total + (weakMatchParts.has(part) ? 1 : 4);
+            }, 0);
+            return { item, score };
+        }).filter(entry => entry.score > 0)
+          .sort((a, b) => b.score - a.score || a.item.char.localeCompare(b.item.char, 'zh-Hans-CN'));
+
+        const referenceItem = {
+            char: char,
+            radical: normalizedParts[0] || char,
+            partner: normalizedParts.slice(1).join("+") || "独体",
+            allParts: normalizedParts,
+            note: "参考拆解（未收录）",
+            isReference: true
+        };
+
+        return {
+            parts: normalizedParts,
+            relatedCount: scoredMatches.length,
+            items: [referenceItem, ...scoredMatches.slice(0, 80).map(entry => entry.item)]
+        };
+    }
+
+    document.querySelectorAll('#partTabs .tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const part = this.dataset.part;
+            document.querySelectorAll('#partTabs .tab').forEach(t => t.classList.remove('active'));
+            if (part === 'all') {
+                activePartFilter = null;
+                this.classList.add('active');
+                searchInput.value = '';
+            } else {
+                activePartFilter = part;
+                this.classList.add('active');
+                searchInput.value = '';
+            }
+            filterTable();
+        });
+    });
+
+    searchInput.addEventListener('input', function() {
+        if (this.value.trim() !== '') {
+            activePartFilter = null;
+            document.querySelectorAll('#partTabs .tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('#partTabs .tab[data-part="all"]').classList.add('active');
+        }
+        filterTable();
+    });
+
+    clearFilterBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        activePartFilter = null;
+        document.querySelectorAll('#partTabs .tab').forEach(t => t.classList.remove('active'));
+        document.querySelector('#partTabs .tab[data-part="all"]').classList.add('active');
+        filterTable();
+    });
+
+    clearFilterBtn.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            clearFilterBtn.click();
+        }
+    });
+
+    function filterTable() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let filtered = database;
+        let referenceSearch = null;
+
+        if (searchTerm === '' && activePartFilter) {
+            filtered = filtered.filter(item => item.allParts.includes(activePartFilter));
+        }
+
+        if (searchTerm !== '') {
+            filtered = filtered.filter(item => {
+                return item.char.includes(searchTerm) ||
+                       item.allParts.some(p => p.includes(searchTerm)) ||
+                       item.note.includes(searchTerm);
+            });
+        }
+
+        const searchChars = Array.from(searchTerm);
+        if (searchTerm !== '' && filtered.length === 0 && searchChars.length === 1) {
+            referenceSearch = buildReferenceSearch(searchChars[0]);
+            if (referenceSearch) {
+                filtered = referenceSearch.items;
+            }
+        }
+
+        tableBody.innerHTML = '';
+        if (filtered.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" class="empty-state">没有找到匹配的汉字。换一个部件试试。</td></tr>';
+        } else {
+            filtered.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="hanzi">${item.char}</td>
+                    <td class="parts">${item.allParts.join(' · ')}</td>
+                    <td>${item.radical} + ${item.partner}</td>
+                    <td>${item.note}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        if (searchTerm !== '') {
+            if (referenceSearch) {
+                resultInfo.textContent = `“${searchInput.value.trim()}”未收录 · 参考拆解：${referenceSearch.parts.join(' · ')} · 匹配 ${referenceSearch.relatedCount} 个相关字`;
+            } else {
+                resultInfo.textContent = `搜索“${searchInput.value.trim()}” · ${filtered.length} 个结果`;
+            }
+        } else if (activePartFilter) {
+            resultInfo.textContent = `部件“${activePartFilter}” · ${filtered.length} 个结果`;
+        } else {
+            resultInfo.textContent = `显示全部 · ${filtered.length} 个汉字`;
+        }
+    }
+
+    // 初始显示
+    filterTable();
+</script>
+</body>
+</html>
